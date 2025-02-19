@@ -5,16 +5,17 @@ import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
 const Navbar = () => {
-    const isLoggedIn = true;
+    const { data: session } = useSession();
+    const userInfo = session?.user;
 
     const [toggleDropdown, setToggleDropdown] = useState(false);
     const [providers, setProviders] = useState(null);
     useEffect(() => {
-        async () => {
+        const setProvider = async () => {
             const res = await getProviders();
             setProviders(res);
         };
-        setProviders();
+        setProvider();
     }, []);
 
 
@@ -27,7 +28,7 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden sm:flex">
-                {isLoggedIn ? (
+                {userInfo ? (
                     <div className="flex gap-3 md:gap-5-">
                         <Link href='/create-prompt' className="black_btn">Create Prompt</Link>
 
@@ -36,7 +37,7 @@ const Navbar = () => {
                             Sign Out
                         </button>
                         <Link href='/profile' >
-                            <Image src='/assets/images/logo.svg' alt='profile Logo' width={37} height={37} className="rounded-full" />
+                            <Image src={userInfo.image} alt='profile Logo' width={37} height={37} className="rounded-full" />
                         </Link>
                     </div>
                 ) : (
@@ -48,9 +49,9 @@ const Navbar = () => {
             </div>
             {/* Mobile Navigation */}
             <div className="flex relative sm:hidden">
-                {isLoggedIn ? (
+                {userInfo ? (
                     <div className="flex">
-                        <Image src='/assets/images/logo.svg' alt='PromptHaven Logo' width={30} height={30} className='object-contain' onClick={() => setToggleDropdown(prev => !prev)} />
+                        <Image src={userInfo.image} alt='PromptHaven Logo' width={30} height={30} className='object-contain' onClick={() => setToggleDropdown(prev => !prev)} />
 
                         {toggleDropdown && (
                             <div className="dropdown">
