@@ -7,7 +7,6 @@ import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 const Navbar = () => {
     const { data: session } = useSession();
     const userInfo = session?.user;
-
     const [toggleDropdown, setToggleDropdown] = useState(false);
     const [providers, setProviders] = useState(null);
     useEffect(() => {
@@ -36,7 +35,7 @@ const Navbar = () => {
                         <button onClick={signOut} className='outline_btn'>
                             Sign Out
                         </button>
-                        <Link href='/profile' >
+                        <Link href={`/profile`} >
                             <Image src={userInfo.image} alt='profile Logo' width={37} height={37} className="rounded-full" />
                         </Link>
                     </div>
@@ -55,7 +54,7 @@ const Navbar = () => {
 
                         {toggleDropdown && (
                             <div className="dropdown">
-                                <Link href='/profile' className="dropdown_link" onClick={() => setToggleDropdown(false)}>My Profile</Link>
+                                <Link href={`/profile`} className="dropdown_link" onClick={() => setToggleDropdown(false)}>My Profile</Link>
                                 <Link href='/prompt/create' className="dropdown_link" onClick={() => setToggleDropdown(false)}>Create Prompt</Link>
                                 <button type='button' onClick={() => {
                                     setToggleDropdown(false); signOut();

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import Form from '@components/Form';
 
-const UpadatePrompt = () => {
+const UpdatePrompt = () => {
     const router = useRouter();
     const promptId = useSearchParams().get('id');
     const { data: session } = useSession();
@@ -52,4 +52,4 @@ const UpadatePrompt = () => {
     );
 };
 
-export default UpadatePrompt;
+export default UpdatePrompt;

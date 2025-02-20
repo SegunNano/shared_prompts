@@ -3,6 +3,7 @@ import React from 'react';
 import PromptCardList from './PromptCardList';
 
 const Profile = ({ name, prompts, handleEdit, handleDelete, desc }) => {
+    console.log(name);
     return (
         <section className="w-full">
             <h1 className="head_text text-left">

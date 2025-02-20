@@ -3,11 +3,10 @@ import Prompt from "@models/promptModel";
 
 const GET = async (req, { params }) => {
     try {
+        const { id } = await params;
         await connectDB();
-        if (!params.id) {
-            return Response.json({ error: "Author not found" }, { status: 400 });
-        }
-        const prompt = await Prompt.findById(params.id).populate('author');
+        if (!id) return Response.json({ error: "Author not found" }, { status: 400 });
+        const prompt = await Prompt.findById(id).populate('author');
         if (!prompt) return new Response('Prompt not found!', { status: 404 });
         return new Response(JSON.stringify(prompt), { status: 200 });
     } catch (error) {
@@ -17,10 +16,11 @@ const GET = async (req, { params }) => {
 
 const PATCH = async (req, { params }) => {
     const { prompt, tag } = await req.json();
+    const { id } = await params;
 
     try {
         await connectDB();
-        const existingPrompt = await Prompt.findById(params.id);
+        const existingPrompt = await Prompt.findById(id);
         if (!existingPrompt) return new Response('Prompt not found!', { status: 404 });
 
         existingPrompt.prompt = prompt;

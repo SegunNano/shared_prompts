@@ -22,7 +22,7 @@ const PromptCard = ({ data, handleTagClick, handleDelete, handleEdit }) => {
     return (
         <div className="prompt_card">
             <div className="flex justify-between items-start gap-5">
-                <div className="flex flex-1 justify-start items-center gap-3 cursor-pointer">
+                <div className="flex flex-1 justify-start items-center gap-3 cursor-pointer" onClick={() => { router.push(`/profile/${_id}`); }}>
                     <Image src={image} alt={username} width={40} height={40} className="rounded-full object-contain" />
                     <div className="flex flex-col">
                         <h3 className="font-satoshi font-semibold text-gray-900">{username}</h3>
