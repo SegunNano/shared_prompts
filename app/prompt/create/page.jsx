@@ -2,13 +2,15 @@
 import { useState, } from 'react';
 
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import Form from '@components/Form';
 
 const CreatePrompt = () => {
     const router = useRouter();
     const { data: session } = useSession();
+
+    const userInfo = session?.user;
     const author = session?.user.id;
 
     const [submitting, setSubmitting] = useState(false);
@@ -31,8 +33,9 @@ const CreatePrompt = () => {
             setSubmitting(false);
         }
     };
+
     return (
-        <Form type='Create' post={post} setPost={setPost} submitting={submitting} handleSubmit={createPrompt} />
+        userInfo && author && < Form type='Create' post={post} setPost={setPost} submitting={submitting} handleSubmit={createPrompt} />
     );
 };
 

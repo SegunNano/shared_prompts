@@ -18,6 +18,7 @@ const MyProfile = () => {
             const res = await fetch(`/api/prompt/author/${userInfo.id}`);
             if (!res.ok) throw new Error("Failed to fetch prompts");
             const data = await res.json();
+            setPrompts(data.prompts);
         } catch (error) {
             console.error("Error fetching prompts:", error);
         }

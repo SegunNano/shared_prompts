@@ -1,18 +1,20 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'next/navigation';
+import { redirect, useParams } from 'next/navigation';
 import Profile from '@components/Profile';
+import { useSession } from 'next-auth/react';
 
 const UserProfile = () => {
+    const { data: session } = useSession();
+    const userInfo = session?.user;
     const { id } = useParams();
     const [prompts, setPrompts] = useState([]);
-
     const [username, setUsername] = useState('');
 
-
-
-
+    if (userInfo && userInfo.id === id) {
+        redirect('/profile');
+    }
     const fetchPrompts = useCallback(async () => {
         if (!id) return;
         try {
