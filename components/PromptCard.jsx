@@ -6,8 +6,12 @@ import { useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 
 const PromptCard = ({ data, handleTagClick, handleDelete, handleEdit }) => {
+    const { data: session } = useSession();
+    const pathName = usePathname();
+    const router = useRouter();
+    const userInfo = session?.user;
     const { author, prompt, tag } = data;
-    const { image, username, email } = author;
+    const { image, username, email, _id } = author;
     const handleCopy = () => {
         setCopied(prompt);
         navigator.clipboard.writeText(prompt);
@@ -31,6 +35,13 @@ const PromptCard = ({ data, handleTagClick, handleDelete, handleEdit }) => {
             </div>
             <p className="my-4 font-satoshi text-sm text-gray-700">{prompt}</p>
             <p className="font-inter text-sm cursor-pointer blue_gradient" onClick={() => { handleTagClick && handleTagClick(tag); }}>{tag}</p>
+
+            {userInfo && userInfo.id === _id && pathName === '/profile' && (
+                <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+                    <p className="font-inter text-sm cursor-pointer green_gradient" onClick={() => { handleEdit && handleEdit(data._id); }}>Edit</p>
+                    <p className="font-inter text-sm cursor-pointer orange_gradient" onClick={() => { handleDelete && handleDelete(data._id); }}>Delete</p>
+                </div>
+            )}
         </div>
     );
 };
