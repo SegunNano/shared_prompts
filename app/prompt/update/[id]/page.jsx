@@ -2,14 +2,14 @@
 import { useState, useEffect } from 'react';
 
 import { useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 import Form from '@components/Form';
 
 const UpdatePrompt = () => {
     const router = useRouter();
-    const promptId = useSearchParams().get('id');
     const { data: session } = useSession();
+    const { id: promptId } = useParams();
     const author = session?.user.id;
 
     const [submitting, setSubmitting] = useState(false);

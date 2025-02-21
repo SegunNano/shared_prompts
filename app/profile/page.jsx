@@ -24,7 +24,7 @@ const MyProfile = () => {
         }
     }, [userInfo?.id]);
 
-    const handleEdit = promptId => router.push(`/prompt/update?id=${promptId}`);
+    const handleEdit = promptId => router.push(`/prompt/update/${promptId}`);
     const handleDelete = async (promptId) => {
         const isDeleteConfirmed = confirm(`Are you sure you want to delete Prompt: ${promptId}?`);
         if (isDeleteConfirmed) {
